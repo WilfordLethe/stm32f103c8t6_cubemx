@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -85,8 +86,11 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+  __HAL_TIM_SET_AUTORELOAD(&htim2, 999);
+  __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 300);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -98,8 +102,8 @@ int main(void)
     /* USER CODE BEGIN 3 */
     if (systick == 500)
     {
-        HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-        systick = 0;
+      HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+      systick = 0;
     }
   }
   /* USER CODE END 3 */
