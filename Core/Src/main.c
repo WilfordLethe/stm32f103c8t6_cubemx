@@ -43,7 +43,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+extern uint32_t systick;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -80,7 +80,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  HAL_SYSTICK_Config(SystemCoreClock / 1000); /* Generate interrupt every 1ms */
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -96,7 +96,11 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
+    if (systick == 500)
+    {
+        HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+        systick = 0;
+    }
   }
   /* USER CODE END 3 */
 }
