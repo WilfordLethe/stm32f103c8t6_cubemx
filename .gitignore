@@ -1,0 +1,8 @@
+Debug
+.vscode
+*.settings
+*.cproject
+*.mxproject
+*.project
+*.launch
+*.ld
